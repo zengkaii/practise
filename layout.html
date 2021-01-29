@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html *{
+            padding: 0;
+            margin: 0;
+        }
+        /* .container{
+            display: flex;
+            height: 100vh;
+        }
+        .left {
+            background-color: red;
+            flex-basis: 300px;
+            flex-shrink: 0;
+            height: 100%;
+        }
+        .main {
+            background-color: yellow;
+            flex-grow: 1;
+            height: 100%;
+        }
+        .left {
+            width: 300px;
+            background-color: red;
+        }
+        .main {
+            flex:1;
+            background-color: yellow;
+        } */
+        /* .container {
+            display: grid;
+            justify-content: center;
+            align-content: center; 
+            width: 500px;
+            height: 500px;
+            background-color: #eee;
+        }
+
+        .item {
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        } */
+    </style>
+</head>
+<body>
+    <!-- <div class="container">
+        <div class="left"></div>
+        <div class="main"></div>
+    </div> -->
+    <!-- <div class="container">
+        <div class="item"></div>
+    </div> -->
+    <style>
+        .item {
+            margin-bottom: 30px;
+        }
+        .float-container div{
+            min-height: 110px;
+        }
+        .float-left{
+            background-color: yellow;
+            background-color: blue;
+            float: left;
+            width: 300px;
+        }
+        .float-right{
+            background-color: red;
+            float: right;
+            width: 300px;
+        }
+        .float-center{
+            background-color: yellow;
+        }
+    </style>
+    <div class="float-container item">
+        <div class="float-left"></div>
+        <div class="float-right"></div>
+        <div class="float-center">
+            1、浮动布局
+        </div>
+    </div>
+
+
+    <style>
+        .item {
+            margin-bottom: 30px;
+        }
+        .postion-container div{
+            min-height: 110px;
+        }
+        .postion-container{
+            position: relative;
+        }
+        .postion-left{
+            background-color: blue;
+            position: absolute;
+            left: 0;
+            width: 300px;
+        }
+        .postion-right{
+            background-color: red;
+            width: 300px;
+            position: absolute;
+            right: 0;
+        }
+        .postion-center{
+            position: absolute;
+            left: 300px;
+            right: 300px;
+            background-color: yellow;
+        }
+    </style>
+    <div class="postion-container item">
+        <div class="postion-left"></div>
+        <div class="postion-center">
+            1、定位布局
+        </div>
+        <div class="postion-right"></div>
+    </div>
+
+
+    <style>
+        .item {
+            margin-bottom: 30px;
+        }
+        .flex-item{
+            margin-top: 170px;
+        }
+        .flex-container div{
+            min-height: 110px;
+        }
+        .flex-container{
+            display: flex;
+        }
+        .flex-left{
+            background-color: blue;
+            width: 300px;
+        }
+        .flex-right{
+            background-color: red;
+            width: 300px;
+        }
+        .flex-center{
+            flex: 1;
+            background-color: yellow;
+        }
+    </style>
+    <div class="flex-container item flex-item">
+        <div class="flex-left"></div>
+        <div class="flex-center">
+            1、flex布局
+        </div>
+        <div class="flex-right"></div>
+    </div>
+
+    
+    <style>
+        .item {
+            margin-bottom: 30px;
+        }
+        .table-container div{
+            display: table-cell;
+        }
+        .table-container{
+            display: table;
+            width: 100%;
+            min-height: 110px;
+        }
+        .table-left{
+            background-color: blue;
+            width: 300px;
+        }
+        .table-right{
+            background-color: red;
+            width: 300px;
+        }
+        .table-center{
+            background-color: yellow;
+        }
+    </style>
+    <div class="table-container item ">
+        <div class="table-left"></div>
+        <div class="table-center">
+            1、table布局
+        </div>
+        <div class="table-right"></div>
+    </div>
+
+
+    <style>
+        .item {
+            margin-bottom: 30px;
+        }
+        .grid-container div{
+            min-height: 110px;
+        }
+        .grid-container{
+            display: grid;
+            grid-template-columns: 300px auto 300px;
+
+        }
+        .grid-left{
+            background-color: blue;
+        }
+        .grid-right{
+            background-color: red;
+        }
+        .grid-center{
+            background-color: yellow;
+        }
+    </style>
+    <div class="grid-container item ">
+        <div class="grid-left"></div>
+        <div class="grid-center">
+            1、grid布局
+        </div>
+        <div class="grid-right"></div>
+    </div>
+</body>
+</html>
