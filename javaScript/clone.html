@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        var a = {
+            a: '123',
+            b: {
+                c: {
+                    d: 123
+                }
+            }
+        }
+        var c = {
+            a: '123',
+            b: {
+                c: {
+                    d: 123,
+                    e: function e(params) {
+                        console.log('这里是e')
+                    },
+                    f: null,
+                    g: undefined,
+                    h: [1,2,3],
+                    i: /\s+/
+                }
+            }
+        }
+
+        function shallowClone(obj) {
+            if(typeof obj === 'function' && obj !== null) {
+                let cloneObj = Array.isArray(obj) ? [] : {}
+                for(let prop in obj) {
+                    if(obj.hasOwnPropertype(prop)) {
+                        cloneObj[prop] = obj[prop]
+                    }
+                }
+                return cloneObj
+            } else {
+                return obj
+            }
+        }
+
+        function deepClone(target) {
+            let result;
+            if(typeof target === 'object'){
+                if(Array.isArray(target)) {
+                    result = []
+                    for(let i in target) {
+                        result.push(deepClone(target[i]))
+                    }
+                } else if(target === null) {
+                    result = null
+                } else if(target.constructor === RegExp) {
+                    result = target
+                } else {
+                    result = {}
+                    for(let i in target) {
+                        result[i] = deepClone(target[i])
+                    }
+                }
+            } else {
+                result = target
+            }
+            return result
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Rectangle {
+            constructor(height, width) {
+                this.height = height;
+                this.width = width;
+            }
+        }
+        var rect = new Rectangle(100,200)
+
+
+        // 声明一个类
+        class Example3 {
+            say() {
+                console.log('hi Class !')
+            }
+        }
+        // 类的方法被覆盖了 - Chrome80版本，覆盖无效
+        Example3.say2 = 
+            function say2() {
+                console.log('hello Class !')
+            }
+        
+        // 为类添加方法
+        // Object.asign(Example.prototype, {
+        //     listen() {
+        //         console.log('hello !')
+        //     }
+        // })
+        // 删除类上的方法
+        // Reflect.deleteProperty(Example3.prototype, 'say')
+    </script>
+</body>
+</html>

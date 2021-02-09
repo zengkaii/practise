@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        function TestRetrun(params) {
+            this.name = 'abc'
+            return new Date()
+        }
+        function Person(name) {
+            this.name = name
+            this.sum = function() {
+                console.log('sum function!')
+            }
+        }
+        function Per() {
+            this.name = 'per'
+        }
+        Per.prototype = new Person('Per.prototype')
+        var per1 = new Per()
+
+        function Con(name) {
+            Person.call(this, 'Con')
+            this.age = 12
+            this.name = name
+        }
+        var con1 = new Con('con1')
+
+        function SubType(name) {
+            Person.call(this, name)
+        }
+        SubType.prototype = new Person()
+        var sub = new SubType('subType')
+    </script>
+</body>
+</html>
