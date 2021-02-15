@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>es6</title>
+</head>
+<body>
+  <script>
+    //Set
+    var array = [1,2,3,2,3,{a:1},{a:1}, {b:1}]
+    var setArray = new Set(array)
+    console.log(Array.from(setArray))
+
+    //Map
+    var myMap = new Map()
+    var keyString = "a string"
+    var keyObj = {}
+    var keyFunc = function () {}
+    var otherNaN = Number("foo")
+    myMap.set(keyString, "和键'a string'关联的值")
+    myMap.set(keyObj, "和键 keyObj 关联的值")
+    myMap.set(keyFunc, "和键 keyFunc 关联的值")
+    myMap.set(NaN, "not a number")
+    var flatArray = Array.from(myMap).flat()
+  </script>
+</body>
+</html>

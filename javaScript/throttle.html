@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>节流防抖</title>
+</head>
+<body>
+  <script>
+    function throttle(fn, delay) {
+      let timer = null
+      return function() {
+        if(!timer) {
+          timer = setTimeout(() => {
+            fn.call(this, arguments)
+            timer = null
+          }, delay)
+        }
+      }
+    }
+
+    function debounce(fn, delay) {
+      let timer = null
+      return function() {
+        if(timer) {
+          clearTimeout(timer)
+        }
+        timer = setTimeout(() => {
+          fn.call(this, arguments)
+        }, delay)
+      }
+    }
+  </script>
+</body>
+</html>
