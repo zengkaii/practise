@@ -36,6 +36,26 @@
         // })
         // 删除类上的方法
         // Reflect.deleteProperty(Example3.prototype, 'say')
+
+        class Parent {
+            constructor(name, type) {
+                this.name = name
+                this.type = type
+            }
+
+            getName() {
+                return this.name
+            }
+            say() {
+                console.log('say')
+            }
+        }
+        class Child extends Parent {
+            constructor(name2) {
+                super('name', 'type')
+                // this.name2 = name2
+            }
+        }
     </script>
 </body>
 </html>
