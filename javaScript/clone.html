@@ -33,7 +33,7 @@
         }
 
         function shallowClone(obj) {
-            if(typeof obj === 'function' && obj !== null) {
+            if(typeof obj === 'object' && obj !== null) {
                 let cloneObj = Array.isArray(obj) ? [] : {}
                 for(let prop in obj) {
                     if(obj.hasOwnPropertype(prop)) {
@@ -62,6 +62,44 @@
                     result = {}
                     for(let i in target) {
                         result[i] = deepClone(target[i])
+                    }
+                }
+            } else {
+                result = target
+            }
+            return result
+        }
+
+        function simple(params) {
+            if(typeof params === 'object' &&  params !== null) {
+                let cloneObj = Array.isArray(params) ? [] : {}
+                for(let key in params) {
+                    if(params.hasOwnPropertype(key)) {
+                        cloneObj[key] = params[key] 
+                    }
+                }
+                return cloneObj
+            } else {
+                return params
+            }
+        }
+
+        function deep(target) {
+            let result
+            if(typeof target === 'object') {
+                if(Array.isArray(target)) {
+                    result = []
+                    for(let i in target) {
+                        result.push(deep(target[i]))
+                    }
+                } else if (target === null) {
+                    result = null
+                } else if(target.constructor === RegExp) {
+                    result = target
+                } else {
+                    result = {}
+                    for(let key in target) {
+                        result[key] = deep(target[key])
                     }
                 }
             } else {

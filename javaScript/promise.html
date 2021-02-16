@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>promise</title>
+</head>
+<body>
+  <script>
+    function myPromise(executor) {
+      let self = this
+      self.status = 'pending'
+      self.value = undefined
+      self.reason = undefined
+      function resolve(value) {
+        if(self.status === 'pending') {
+          self.value = value
+          self.status = 'resolved'
+        }
+      }
+      function reject(reason) {
+        if(self.status = 'pending') {
+          self.reason = reason
+          self.status = 'reject'
+        }
+      }
+      try {
+        executor(resolve, reject)
+      } catch (error) {
+        reject(error)
+      }
+    }
+
+    class MyPromise {
+
+      constructor(executor) {
+        this.status = 'pending'
+        this.value = undefined
+        this.reason = undefined
+        this.onRejectedCallbacks = []
+        this.onResolveCallbacks = []
+        let resolve = (value) => {
+          if(this.status === 'pending') {
+            this.status = 'resolved'
+            this.value = value
+            this.onResolveCallbacks.forEach(fn => fn())
+          }
+        }
+        let reject = (reason) => {
+          if(this.status === 'pending') {
+            this.status = 'reject'
+            this.reason = reason
+            this.onRejectedCallbacks.forEach(fn => fn())
+          }
+        }
+        try {
+          executor(resolve, reject)
+        } catch (error) {
+          reject(error)
+        }
+      }
+      then(onFullFilled, onRejected) {
+        if(this.status === 'resolved') {
+          onFullFilled(this.value)
+        }
+        if(this.status === 'rejected') {
+          onRejected(this.reason)
+        }
+        if(this.status === 'pending') {
+          this.onResolveCallbacks.push(() => {
+            onFullFilled(this.value)
+          })
+          this.onRejectedCallbacks.push(() => {
+            onRejected(this.reason)
+          })
+        }
+      }
+    }
+    
+    let p = new MyPromise((resolve, reject) => {
+      setTimeout(() => {
+        reject('hello1')
+      },2000)
+    })
+    p.then((res) => {
+      console.log(res, 'then')
+      
+      setTimeout(() => {
+        reject('world')
+      },4000)
+    }, 
+    (err) => {
+      console.log(err, 'err')
+    })
+  </script>
+</body>
+</html>
