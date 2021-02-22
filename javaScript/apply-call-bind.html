@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {
+            color: #443726;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function getGlobalObject(){
+            return this;
+        }
+        Function.prototype.myApply = function (thisArg, argsArray) {
+            console.log(this)
+            if(typeof this !== 'function') {
+                throw new TypeError(this + 'is not a function!')
+            }
+            if(typeof argsArray === 'undefined' || argsArray === null) {
+                argsArray = []
+            }
+            if(argsArray !== new Object(argsArray)) {
+                throw new TypeError('CreateListFromArrayLike called on non-object');
+            }
+            if(typeof thisArg === 'undefined' || thisArg === null){
+                thisArg = getGlobalObject();
+            }
+            thisArg = new Object(thisArg)
+            var _fn = Symbol(1)
+            thisArg[_fn] = this
+            var result =  thisArg[_fn](...argsArray)
+            delete thisArg[_fn]
+            return result
+        }
+
+        Function.prototype.myCall = function (thisArg) {
+            if(typeof this !== 'function') {
+                throw new TypeError(this + 'is not a function')
+            }
+            var argsArray = Array.from(arguments).slice(1)
+            if(typeof thisArg === 'undefined' || thisArg === null){
+                thisArg = getGlobalObject();
+            }
+            thisArg = new Object(thisArg)
+            var _fn = Symbol(1)
+            thisArg[_fn] = this
+            var result =  thisArg[_fn](...argsArray)
+            delete thisArg[_fn]
+            return result
+        }
+
+        Function.prototype.myBind = function (thisArg) {
+            if(typeof this !== 'function'){
+                throw new TypeError(this + 'must be a function');
+            }
+            var self = this
+            var argsArray = Array.from(arguments).slice(1)
+            var bound = function () {
+                var boundArgs = Array.from(arguments)
+                var finalArgs = argsArray.concat(boundArgs)
+                if(this instanceof bound) {
+                    if(self.prototype) {
+                        function Empty() {}
+                        Empty.prototype = self.prototype
+                        bound.prototype = new Empty()
+                    }
+                    var result = self.apply(this, finalArgs)
+                    var isObject = typeof result === 'object' && result !== null
+                    var isFunction = typeof result === 'function'
+                    if(isObject || isFunction) {
+                        return result
+                    }
+                    return this
+                } else {
+                    return self.apply(thisArg, finalArgs)
+                }
+            }
+            return bound
+        }
+    </script>
+</body>
+</html>

@@ -23,8 +23,8 @@
 
     var new2 = function(func) {
       console.log(arguments)
-      let params = Array.prototype.slice.call(arguments).slice(1)
-      console.log(...params)
+      let params = Array.prototype.slice.call(arguments, 1)
+      console.log(params)
       var o = Object.create(func.prototype)
       // console.log(o)
       var result = func.call(o,...params)
