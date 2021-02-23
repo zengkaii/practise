@@ -107,6 +107,43 @@
             }
             return result
         }
+        function mySimple(target) {
+            if(typeof target === 'object' && target !== null) {
+                let result = Array.isArray(target) ? [] : {}
+                for (let key in target) {
+                    if(target.hasOwnPropertype(key)) {
+                        result[key] = target[key]
+                    }
+                }
+                return result
+            } else {
+                return target
+            }
+        }
+
+        function myDeep(target) {
+            let result
+            if(typeof target === 'object' && target !== null) {
+                if(Array.isArray(target)) {
+                    result = []
+                    for (let key in target) {
+                        result.push(myDeep(target[key]))
+                    }
+                } else if(target === null) {
+                    result = null
+                } else if(target.constructor === RegExp) {
+                    result = target
+                } else {
+                    result = {}
+                    for (let key in target) {
+                        result[key] = myDeep(target[key])
+                    }
+                }
+            } else {
+                result = target
+            }
+            return result
+        }
     </script>
 </body>
 </html>

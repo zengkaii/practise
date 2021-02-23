@@ -186,7 +186,7 @@
 
         var new2 = function(fn) {
             var o = Object.create(fn.prototype)
-            const arg = Array.prototype.slice.call(arguments).slice(1)
+            const arg = Array.prototype.slice.call(arguments, 1)
             var result = fn.apply(o, arg)
             if(typeof result === 'object') {
                 return result
@@ -194,6 +194,67 @@
                 return o
             }
         }
+
+        var new3 = function (fn) {
+            var o = Object.create(fn.prototype)
+            const args = Array.from(arguments).slice(1)
+            var result = fn.call(o, ...args)
+            if(typeof result === 'object') {
+                return result
+            } else {
+                return o
+            }
+        }
+
+        function Par1() {
+            this.name = 'Par1'
+        }
+        function Chi1() {
+            Par1.call(this)
+            this.type = 'Chi1'
+        }
+
+
+        function Par2() {
+            this.name = 'Par2'
+        }
+        function Chi2() {
+            this.type = 'Chi2'
+        }
+        Chi2.prototype = new Chi2()
+
+
+
+        function Par3() {
+            this.name = 'Par3'
+        }
+        function Chi3() {
+            Par3.call(this)
+            this.type = 'Chi3'
+        }
+        Chi3.prototype = new Chi3()
+
+
+        function Par4() {
+            this.name = 'Par4'
+        }
+        function Par4() {
+            Par4.call(this)
+            this.type = 'Par4'
+        }
+        Chi4.prototype = Par4.prototype
+
+
+        function Par5() {
+            this.name = 'Par5'
+        }
+        function Chi5() {
+            Par5.call(this)
+            this.type = 'Chi5'
+        }
+        Chi5.prototype = Object.create(Par5.prototype)
+        Chi5.prototype.constructor = Chi5
+
 
     </script>
 </body>

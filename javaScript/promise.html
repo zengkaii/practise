@@ -93,6 +93,51 @@
     (err) => {
       console.log(err, 'err')
     })
+
+    class MyPromise2 {
+      constructor(executor) {
+        this.status = 'pending'
+        this.value = undefined
+        this.reason = undefined
+        this.onResolveCallbacks = []
+        this.onRejectCallbacks = []
+        let resolve = (value) => {
+          if(this.status === 'pending') {
+            this.value = value
+            this.status = 'resolved'
+            this.onResolveCallbacks.forEach(fn => fn())
+          }
+        }
+        let reject = (reason) => {
+          if(this.status === 'pending') {
+            this.value = reason
+            this.status = 'rejected'
+            this.onRejectCallbacks.forEach(fn => fn())
+          }
+        }
+        try {
+          executor(resolve, reject)
+        } catch (error) {
+          reject(error)
+        }
+      }
+      then(onFullFilled, onRejected) {
+        if(this.status === 'resolved') {
+          onFullFilled(this.value)
+        }
+        if(this.status === 'rejected') {
+          onRejected(this.reason)
+        }
+        if(this.status === 'pending') {
+          this.onResolveCallbacks.push(() => {
+            onFullFilled(this.value)
+          })
+          this.onResolveCallbacks.push(() => {
+            onRejected(this.reason)
+          })
+        }
+      }
+    }
   </script>
 </body>
 </html>

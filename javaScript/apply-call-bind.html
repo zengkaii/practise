@@ -24,7 +24,9 @@
             if(typeof argsArray === 'undefined' || argsArray === null) {
                 argsArray = []
             }
-            if(argsArray !== new Object(argsArray)) {
+            console.log(argsArray, new Object(argsArray))
+            console.log(argsArray !== new Object(argsArray))
+            if(!Array.isArray(argsArray)) {
                 throw new TypeError('CreateListFromArrayLike called on non-object');
             }
             if(typeof thisArg === 'undefined' || thisArg === null){
@@ -79,6 +81,59 @@
                 } else {
                     return self.apply(thisArg, finalArgs)
                 }
+            }
+            return bound
+        }
+
+        Function.prototype.MyCall = function(thisArg) {
+            if(typeof this !== 'function') {
+                throw new TypeError(this + 'is not a function')
+            }
+            if(typeof thisArg === 'undefined' || thisArg === null) {
+                thisArg = getGlobalObject()
+            }
+            console.log( Array.from(arguments))
+            let argsArray = Array.from(arguments).slice(1)
+            thisArg = new Object(thisArg)
+            var _fn = Symbol(1)
+            thisArg[_fn] = this
+            var result = thisArg[_fn](...argsArray)
+            delete thisArg[_fn]
+            return result
+        }
+        Function.prototype.MyApply = function(thisArg, argsArray) {
+            if(typeof this !== 'function') {
+                throw new TypeError(this + 'is not a function')
+            }
+            if(typeof argsArray === 'undefined' || argsArray === null) {
+                argsArray = []
+            }
+            if(!Array.isArray(argsArray)) {
+                throw new TypeError('CreateListFromArrayLike called on non-object');
+            }
+            if(typeof thisArg === 'undefined' || thisArg === null) {
+                thisArg = getGlobalObject()
+            }
+            thisArg = new Object(thisArg)
+            var _fn = Symbol(1)
+            thisArg[_fn] = this
+            var result = thisArg[_fn](...argsArray)
+            delete thisArg[_fn]
+            return result
+        }
+
+        Function.prototype.MyBind = function(thisArg) {
+            if(typeof this !== 'function') {
+                throw new TypeError(this + 'is not a function')
+            }
+            if(typeof thisArg === 'undefined' || thisArg === null) {
+                thisArg = getGlobalObject()
+            }
+            var argsArray = Array.from(arguments).slice(1)
+            var self = this
+            var bound = function () {
+                var args = Array.from(arguments)
+                return self.MyApply(thisArg, argsArray.concat(args))
             }
             return bound
         }
