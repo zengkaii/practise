@@ -137,6 +137,51 @@
             }
             return bound
         }
+
+        Function.prototype.myApply2 = function (thisArg, argsArray) {
+            if(typeof this !== 'funciton') {
+                throw new TypeError(this + 'is not a function')
+            }
+            if(!Array.isArray(argsArray)) {
+                throw new TypeError('not array')
+            }
+            if(typeof thisArg === 'undefind' || thisArg === null) {
+                thisArg = getGlobalObject()
+            }
+            thisArg = new Object(thisArg)
+            var _fn = Symbol(1)
+            thisArg[_fn] = this
+            var result = thisArg[_fn](...argsArray)
+            delete thisArg[_fn]
+            return result
+        }
+        Function.prototype.myCall2 = function (thisArg) {
+            if(typeof this !== 'funciton') {
+                throw new TypeError(this + 'is not a function')
+            }
+            if(typeof thisArg === 'undefind' || thisArg === null) {
+                thisArg = getGlobalObject()
+            }
+            var argsArray = Array.from(arguments).slice(1)
+            thisArg = new Object(thisArg)
+            var _fn = Symbol(1)
+            thisArg[_fn] = this
+            var result = thisArg[_fn](...argsArray)
+            delete thisArg[_fn]
+            return result
+        }
+        Function.prototype.myBind2 = function (thisArg) {
+            if(typeof this !== 'funciton') {
+                throw new TypeError(this + 'is not a function')
+            }
+            var argsArray = Array.from(arguments).slice(1)
+            var self = this
+            var bound = function name() {
+                var boundArgs = Array.from(arguments)
+                return self.myApply2(thisArg, argsArray.concat(boundArgs))
+            }
+            return bound
+        }
     </script>
 </body>
 </html>
