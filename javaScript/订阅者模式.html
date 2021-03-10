@@ -23,6 +23,76 @@
                 this.events[eventName] && this.events[eventName].forEach(callback => callback())
             }
         }
+       
+        
+        // {
+        //     type: [
+            // {
+            //         fn:  () => {
+                        
+            //         },
+            //         params: ''
+            //     }
+            // }
+        // ]
+        // }
+        class Events {
+            constructor() {
+                this.callbacks = {}
+            }
+            on(type, fn) {
+                let args = Array.from(arguments).slice(2)
+                if(!this.callbacks[type]) {
+                    this.callbacks[type] = [{
+                        fn: fn,
+                        params: args,
+                        once: false
+                    }]
+                } else {
+                    this.callbacks[type].push({
+                        fn: fn,
+                        params: args,
+                        once: false
+                    })
+                }
+            }
+            fire(type) {
+                let args = Array.from(arguments).slice(1)
+                Object.keys(this.callbacks).forEach(key => {
+                    if(key === type) {
+                        this.callbacks[key] = this.callbacks[key].filter(item => {
+                            item.fn(...item.params, ...args)
+                            return !item.once
+                        })
+                    }
+                })
+            }
+            off(type, fn) {
+                if(this.callbacks[type]) {
+                    console.log(fn.name)
+                    this.callbacks[type] = this.callbacks[type].filter(item => item.fn !== fn)
+                }
+            }
+            once(type, fn, once) {
+                let args = Array.from(arguments).slice(2)
+                if(!this.callbacks[type]) {
+                    this.callbacks[type] = [{
+                        fn: fn,
+                        params: args,
+                        once: true
+                    }]
+                } else {
+                    this.callbacks[type].unshift({
+                        fn: fn,
+                        params: args,
+                        once: true
+                    })
+                }
+            }
+        }
+        const fn1 = (... args)=>console.log('I want sleep1', ... args)
+        const fn2 = (... args)=>console.log('I want sleep2', ... args)
+        const event = new Events();
     </script>
 </body>
 </html>
