@@ -137,6 +137,27 @@
             }
             return bound
         }
+
+        Function.prototype.MyApply2 = function(thisArg, argsArray) {
+            if(typeof this !== 'function') {
+                throw new TypeError(this + 'is not a function')
+            }
+            if(thisArg === null || typeof thisArg === 'undefind') {
+                thisArg = getGlobalObject()
+            }
+            if(argsArray === null || typeof argsArray === 'undefind') {
+                argsArray = []
+            }
+            if(!Array.isArray(argsArray)) {
+                throw new TypeError('is not array')
+            }
+            let _fn = Symbol(1)
+            thisArg = new Object(thisArg)
+            thisArg[_fn] = this
+            let result = thisArg[_fn](...argsArray)
+            delete thisArg[_fn]
+            return result
+        }
     </script>
 </body>
 </html>

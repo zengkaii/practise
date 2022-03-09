@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <script>
+
+    /*
+      1.创建被观察者
+        => 属性，自己的状态
+        => 队列，记录都有谁观察着自己，数组
+        => 方法，能设置自己的状态，当我需要改变的时候，要出发这个方法改变状态
+      2.创建观察者
+        => 需要一个身份证明
+        => 需要一个技能
+    */
+    // 观察者构造函数
+    class Observer{
+      constructor(name, fn=() => {}) {
+        this.name = name
+        this.fn = fn
+      }
+    }
+
+    const bzr = new Observer('班主任', (state) => {console.log(state + '把你爸找来')})
+    const xz = new Observer('校长', (state) => {console.log(state + '骂你的班主任')})
+
+
+    class Subject {
+      constructor(state) {
+      //记录自己的状态
+        this.state = state
+        // 数组保存观察者
+        this.observers = []
+      }
+      
+      setState(val) {
+        this.state = val
+        this.observers.forEach(item => {
+          item.fn(this.state)
+        })
+      }
+
+      addObserver(obs) {
+        const res = this.observers.some(item => item === obs)
+        if(!res) {
+          this.observers.push(obs)
+        }
+      }
+      delObserver() {
+        this.observers.filter(item => item !== obs)
+      }
+
+    }
+
+    const xiaoming = new Subject('学习')
+
+    xiaoming.addObserver(bzr)
+    xiaoming.addObserver(xz)
+
+
+    class Observer2{
+      constructor(name, fn = () => {}) {
+        this.name = name
+        this.fn = fn
+      }
+    }
+
+    class Subject2 {
+      constructor(state) {
+        this.state = state
+        this.observers = []
+      }
+      setState(state) {
+        this.state = state
+        this.observers.forEach(item => {
+          item.fn(this.state)
+        })
+      }
+      addObserver(obs) {
+        this.observers.push(obs)
+      }
+      delObserver(obs) {
+        this.observers.filter(item => item !== obs)
+      }
+    }
+  </script>
+</body>
+</html>
