@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class Subject {
+            constructor(state) {
+                this.state = state
+                this.observers = []
+            }
+            setState(state) {
+                this.state = state
+                this.observers.forEach(item => {
+                    item.fn(state)
+                })
+            }
+            addObserver(obs) {
+                this.observers.push(obs)
+            }
+            delObserver(obs) {
+                this.observers.filter(item => item !== obs)
+            }
+        }
+        class Observer {
+            constructor(name, fn= (state) => {}) {
+                this.name = name
+                this.fn = fn
+            }
+        }
+        const xiaoming = new Subject('学习')
+        const bzr = new Observer('班主任', (state) => {console.log(`因为：${state}，把你爸找来`)})
+        const xz = new Observer('校长', (state) => {console.log(`因为：${state}，骂班主任`)})
+
+    </script>
+</body>
+</html>

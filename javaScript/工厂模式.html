@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        class headPet {
+            sellpet(name) {
+                console.log('出售一只宠物', name)
+            }
+            desert(name) {
+                console.log('遗弃一只宠物', name)
+            }
+            operation(name, type) {
+                switch (type) {
+                    case 'sell':
+                        this.sellpet(name)
+                        break;
+                    default:
+                        this.desert(name)
+                        break;
+                }
+            }
+        }
+        class normalPet extends headPet {
+            constructor() {
+                super()
+            }
+            dog(name, type) {
+                this.operation(name, type)
+            }
+            cat(name, type) {
+                this.operation(name, type)
+            }
+            mouse(name, type) {
+                this.operation(name, type)
+            }
+        }
+        class fishPet extends headPet {
+            constructor() {
+                super()
+            }
+            shark(name, type) {
+                this.operation(name, type)
+            }
+            whale(name, type) {
+                this.operation(name, type)
+            }
+        }
+
+        function selectPet(shop) {
+            switch (shop) {
+                case 'normal': {
+                    return new normalPet()
+                }
+                case 'fish': {
+                    return new fishPet()
+                }
+                default: {
+                    console.log('暂无此分店哦')
+                }
+            }
+        }
+        const normal = selectPet('normal')
+        normal.dog('Spike', 'sell')
+        normal.cat('Tom', 'desert')
+        normal.mouse('Jerry', 'sell') 
+        const fish = selectPet('fish')
+        fish.shark('Shark', 'desert')
+        fish.whale('Whale', 'sell')
+    </script>
+</body>
+</html>
